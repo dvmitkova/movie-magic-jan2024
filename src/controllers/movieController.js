@@ -18,7 +18,10 @@ router.get('/movies/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     const movie = movieService.getOne(movieId);
 
-    console.log(movie);
+    movie.rating = new Array(Number(movie.rating)).fill(true);
+    //TODO This is not perfect, use handlebars helpers
+    //movie.ratingStars = '&#x2605;'.repeat(movie.rating)
+
     res.render('details', { movie });
 })
 
