@@ -29,6 +29,10 @@ router.get('/movies/:movieId', async (req, res) => {
     //movie.ratingStars = '&#x2605;'.repeat(movie.rating)
 
     res.render('details', { movie });
-})
+});
+
+router.get('/movies/:movieId/attach', (req, res) => {
+    res.render('movie/attach');
+});
 
 module.exports = router;
