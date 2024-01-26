@@ -1,25 +1,11 @@
 const Movie = require('../models/Movie');
 
-const movies = [{
-    _id: 1,
-    title: 'Batman',
-    genre: 'Action',
-    director: 'No man',
-    year: '2010',
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTM3MTRkZjQtYjBkMy00YWE1LTkxOTQtNDQyNGY0YjYzNzAzXkEyXkFqcGdeQXVyOTgwMzk1MTA@._V1_FMjpg_UX1000_.jpg',
-    rating: '5',
-    description: 'Based on the comics'
-}];
+exports.getAll = () => Movie.find();//връща на всички филмми;
+    //това ни връща заявка, която като се resolve-не ни връща МАСИВ!
 
-exports.getAll = () => {
-    return movies.slice();//shallow cloning на масива, за да не се дава на user-a референция
-    //към нашия масив, който в последствие да може да промени.
-    // == return [...movies] = нов масив със spread-нат вътре стария;
-    // == return Array.from(movies); ??
-}
-
-exports.search = (title, genre, year) => {
-    let result = movies.slice();
+    //TODO: Filter result in mongodb
+exports.search = async (title, genre, year) => {
+    let result = await Movie.find().lean();
 
     if (title) {
         result = result.filter(movie => movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase()));
@@ -33,14 +19,6 @@ exports.search = (title, genre, year) => {
     return result;
 }
 
-exports.getOne = (movieId) => {
-    const movie = movies.find(movie => movie._id == movieId);
+exports.getOne = (movieId) => Movie.findById(movieId);
 
-    return movie;
-}
-
-exports.create = async (movieData) => {
-    const result = await Movie.create(movieData);
-
-    return result;
-}
+exports.create = (movieData) => Movie.create(movieData);//връща promise, който resolve-ваме в movie controller-a;

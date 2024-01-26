@@ -2,9 +2,12 @@ const router = require('express').Router();
 
 const movieService = require('../services/movieService')
 
-router.get('/', (req, res) => {
-    const movies = movieService.getAll();
+router.get('/', async (req, res) => {
+    const movies = await movieService.getAll().lean();//.lean се chain-ва за query-to, за да ни върне чист обект!
+    //await - връща документ;
+    //без await - връща query;
 
+//
     res.render('home', { movies });
 });
 
