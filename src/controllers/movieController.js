@@ -6,6 +6,7 @@ router.get('/create', (req, res) => {
     res.render('create');
 });
 
+
 router.post('/create', async (req, res) => {
     const newMovie = req.body;
 

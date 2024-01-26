@@ -6,6 +6,7 @@ exports.getAll = () => Movie.find();//връща на всички филмми;
     //TODO: Filter result in mongodb
 exports.search = async (title, genre, year) => {
     let result = await Movie.find().lean();
+    
 
     if (title) {
         result = result.filter(movie => movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase()));
