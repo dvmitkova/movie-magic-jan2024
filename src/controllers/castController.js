@@ -1,13 +1,15 @@
 const router = require('express').Router();
 
+const castService = require('../services/castService');
+
 router.get('/create', (req, res) => {
     res.render('cast/create');
 });
 
-router.post('/create', (req, res) => {//когато правим post заявка на страницата:
-    const body = req.body;//взимаме данните
+router.post('/create', async (req, res) => {//когато правим post заявка на страницата:
+    const castData = req.body;//взимаме данните
 
-    console.log(body);//логваме ги
+    await castService.create(castData);
 
     res.redirect('/');//връщаме на нач. страница;
 })
