@@ -35,6 +35,10 @@ const movieSchema = new mongoose.Schema({
         required: true,
         match: /^https?:\/\// //RegExp
     },
+    casts: [{//държим референция към Cast;
+        type: mongoose.Types.ObjectId,//обект, който се съхранява в DB и съдържа уникално Id;
+        ref: 'Cast',
+    }]
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

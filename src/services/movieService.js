@@ -23,3 +23,14 @@ exports.search = async (title, genre, year) => {
 exports.getOne = (movieId) => Movie.findById(movieId);
 
 exports.create = (movieData) => Movie.create(movieData);//връща promise, който resolve-ваме в movie controller-a;
+
+exports.attach = async (movieId, castId) => {
+    const movie = await this.getOne(movieId);
+
+    //TODO: validate castId if exists
+    //TODO: Validate if cast is already added;
+    movie.casts.push(castId);
+    return movie.save();
+    // ==     =>
+    //Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+}
