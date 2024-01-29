@@ -29,6 +29,10 @@ const castSchema = new mongoose.Schema({
             message: (props) => `${props.value} is invalid url for the castImage!`
         }
     },
+    // movies: [{//двойна релация - когато влезнем в актьор, да видим неговите филми;
+    //     type: mongoose.Types.ObjectId,
+    //     ref: 'Movie,'//актьорите имат релация към филмите;
+    // }]
 });
 
 const Cast = mongoose.model('Cast', castSchema);

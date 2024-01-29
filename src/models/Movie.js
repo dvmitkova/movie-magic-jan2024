@@ -8,6 +8,7 @@ const movieSchema = new mongoose.Schema({
     genre: {
         type: String,
         required: true,
+        lowercase: true,
     },
     director: {
         type: String,
@@ -37,7 +38,7 @@ const movieSchema = new mongoose.Schema({
     },
     casts: [{//държим референция към Cast;
         type: mongoose.Types.ObjectId,//обект, който се съхранява в DB и съдържа уникално Id;
-        ref: 'Cast',
+        ref: 'Cast',//релация - референция към модела, към който ObjectId сочи.
     }]
 });
 
