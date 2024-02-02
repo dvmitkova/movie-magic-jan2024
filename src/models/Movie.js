@@ -39,7 +39,11 @@ const movieSchema = new mongoose.Schema({
     casts: [{//държим референция към Cast;
         type: mongoose.Types.ObjectId,//обект, който се съхранява в DB и съдържа уникално Id;
         ref: 'Cast',//релация - референция към модела, към който ObjectId сочи.
-    }]
+    }],
+    owner: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+    }
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
