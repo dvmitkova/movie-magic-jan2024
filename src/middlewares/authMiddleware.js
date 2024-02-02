@@ -26,7 +26,7 @@ exports.auth = async (req, res, next) => {
 //middleware, който проверява дали юзъра е оторизиран:
 exports.isAuth = (req, res, next) => {
     if (!req.user) {
-        res.redirect('/auth/login')
+        return res.redirect('/auth/login')
     }
     next();
 }

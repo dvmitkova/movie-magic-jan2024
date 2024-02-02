@@ -18,8 +18,6 @@ router.post('/create', isAuth, async (req, res) => {
         owner: req.user._id,
     }
 
-    newMovie.owner = req.user._id;//юзъра, който текущо създава филма.
-    
     try {
         await movieService.create(newMovie);
 
@@ -34,12 +32,13 @@ router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getOne(movieId).lean();
     //const casts = await castService.getByIds(movie.casts).lean();
+    const isOwner = movie.owner == req.user._id;
 
     movie.rating = new Array(Number(movie.rating)).fill(true);//rating
     //TODO This is not perfect, use handlebars helpers
     //movie.ratingStars = '&#x2605;'.repeat(movie.rating)
 
-    res.render('movie/details', { movie });
+    res.render('movie/details', { movie, isOwner });
 });
 
 router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
