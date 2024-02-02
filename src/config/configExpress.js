@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 function configExpress(app) {
 app.use(express.static(path.resolve('src/static')));//CWD = Current Working Directory
@@ -7,6 +8,7 @@ app.use(express.static(path.resolve('src/static')));//CWD = Current Working Dire
 app.use(express.urlencoded({ extended: false }));
 //middleware, който чете и парсва информацията в body-to преди данните да дойдат при нас.
 //Използва се за извличане на данни от форма.
+app.use(cookieParser());//закрепваме middleware cookie-parser за приложението.
 return app;
 }
 
