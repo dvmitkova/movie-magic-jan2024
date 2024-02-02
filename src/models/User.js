@@ -6,6 +6,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         lowercase: true,
+        unique: true,//не може да има втори потребител с такъв имейл;
     },
     password: {
         type: String,
@@ -20,7 +21,7 @@ userSchema.pre('save', async function() {
 });
 
 userSchema.virtual('rePassword')//закачаме виртуално пропърти в модела, бяз да се записва в DB.
-    .set(function(value) {
+    .set(function(value) {//value идва от полето, в което въвеждаме repass;
         //validate
         if (value !== this.password) {
             throw new MongooseError('Password mismatch!')
