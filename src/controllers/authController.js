@@ -23,9 +23,9 @@ router.post('/login', async (req, res) => {//актуалното логване
 
     const token = await authService.login(email, password);
 
-    console.log(token);
+    res.cookie('auth', token);//създавам куки и закрепвам ст-стта на token към него.
 
     res.redirect('/');
-})
+});
 
 module.exports = router;

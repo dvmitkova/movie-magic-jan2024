@@ -29,6 +29,7 @@ exports.login = async (email, password) => {
     }
     const token = await jwt.sign(payload, SECRET, { expiresIn: '2h' });
 
+    console.log(token);
     //Return token if validation passed
     return token;
 }
