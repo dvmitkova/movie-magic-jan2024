@@ -1,14 +1,18 @@
 const router = require('express').Router();
 
 const movieService = require('../services/movieService');
-const castService = require('../services/castService')
+const castService = require('../services/castService');
+const { isAuth } = require('../middlewares/authMiddleware');
 
-router.get('/create', (req, res) => {
+//router.use(isAuth);//ако го ползваме за целия файл, това значи, че всички
+//страници, които се опитваме да достъпим първо ще преминат през isAuth
+//и ако имаме автентикация, ще ги заредим.
+
+router.get('/create', isAuth, (req, res) => {
     res.render('create');
 });
 
-
-router.post('/create', async (req, res) => {
+router.post('/create', isAuth, async (req, res) => {
     const newMovie = req.body;
 
     try {
@@ -33,14 +37,14 @@ router.get('/movies/:movieId', async (req, res) => {
     res.render('details', { movie });
 });
 
-router.get('/movies/:movieId/attach', async (req, res) => {
+router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
     const movie = await movieService.getOne(req.params.movieId).lean();
     const casts = await castService.getAll().lean();
     //TODO remove already added cast
     res.render('movie/attach', { ...movie, casts });
 });
 
-router.post('/movies/:movieId/attach', async (req, res) => {
+router.post('/movies/:movieId/attach', isAuth, async (req, res) => {
     const castId = req.body.cast;
     const movieId = req.params.movieId;
     
@@ -48,9 +52,11 @@ router.post('/movies/:movieId/attach', async (req, res) => {
 
     res.redirect(`/movies/${movieId}/attach`);    
 });
-
-router.get('/movies/:movieId/edit', async (req, res) => {
+//Когато достъпим пътя => минаваме през мидълуеър isAuth и ако юзъра е 
+//аутентикиран => преминаваме на next => async.....
+router.get('/movies/:movieId/edit', isAuth, async (req, res) => {
     const movie = await movieService.getOne(req.params.movieId).lean();
+
     res.render('movie/edit', { movie });
 })
 
