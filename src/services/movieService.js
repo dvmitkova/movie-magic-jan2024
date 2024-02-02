@@ -30,6 +30,8 @@ exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 //прилагаме populate на query-то още преди да сме resolve-нали promise-a;
 exports.create = (movieData) => Movie.create(movieData);//връща promise, който resolve-ваме в movie controller-a;
 
+exports.edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData)
+
 exports.attach = async (movieId, castId) => {
     const movie = await this.getOne(movieId);
     //const cast = await Cast.findById(castId);
@@ -39,11 +41,13 @@ exports.attach = async (movieId, castId) => {
     //TODO: validate castId if exists
     
     //TODO: Validate if cast is already added;
-    movie.casts.push(cast);
+    movie.casts.push(castId);
 
     await movie.save();
 
     return movie;
     // ==     =>
     //Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
-}
+};
+
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
