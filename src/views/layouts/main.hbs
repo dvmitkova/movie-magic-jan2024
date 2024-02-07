@@ -6,6 +6,7 @@
     <title>Catalog Page</title>
     <!-- Do not forget to change the path to the css file -->
     <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/src/static/img/heartFavicon.png">
 </head>
 
 <body>
@@ -23,11 +24,11 @@
                 {{#if isAuthenticated}}
                 <li><a href="/create">Create Post</a></li>
                 <li><a href="/cast/create">Create Cast</a></li>
-                <li><a href="auth/logout">Logout</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
                 <!--Guest-->
                 {{else}}
-                <li><a href="auth/login">Login</a></li>
-                <li><a href="auth/register">Register</a></li>
+                <li><a href="/auth/login">Login</a></li>
+                <li><a href="/auth/register">Register</a></li>
                 {{/if}}
             </ul>
 
