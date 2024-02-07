@@ -7,7 +7,7 @@ const userSchema = new Schema({
         required: true,
         lowercase: true,
         unique: true,//не може да има втори потребител с такъв имейл;
-        match: [/^[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/, 'Invalid email address'],
+        match: [/@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/, 'Invalid email address'],
         minLength: [10, 'Email should be at least 10 characters'],
     },
     password: {

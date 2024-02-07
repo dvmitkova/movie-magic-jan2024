@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
 const { SECRET } = require('../config/config');
 
-exports.register = (userData) => {
-    const user = User.findOne({email: userData.email});
+exports.register = async (userData) => {
+    const user = await User.findOne({ email: userData.email });
     //ако вече има регистриран потребител със същия имейл, хвърляме грешка;
     if (user) {
         throw new Error('Email already exists');
     }
 
-    return User.create(userData);
+    return User.create(userData);//promise, който създава в DB нашия user;
 }
 
 exports.login = async (email, password) => {

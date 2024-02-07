@@ -3,6 +3,7 @@ const router = require('express').Router();
 const movieService = require('../services/movieService');
 const castService = require('../services/castService');
 const { isAuth } = require('../middlewares/authMiddleware');
+const { getErrorMessage } = require('../utils/errorUtils');
 
 //router.use(isAuth);//ако го ползваме за целия файл, това значи, че всички
 //страници, които се опитваме да достъпим първо ще преминат през isAuth
@@ -23,8 +24,8 @@ router.post('/create', isAuth, async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        console.log(err.message);
-        res.redirect('/create');
+        const message = getErrorMessage(err);
+        res.status(400).render('create', { error: message, ...newMovie });
     }
 });
 
